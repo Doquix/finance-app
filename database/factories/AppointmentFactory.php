@@ -19,8 +19,8 @@ class AppointmentFactory extends Factory
     public function definition()
     {
         return [
-            'client_id' => Client::factory()->create()->id,
-            'title' => $this->faker->sentence(),
+            'client_id' => 11,
+            // 'title' => $this->faker->sentence(),
             'description' => $this->faker->paragraph(),
             'start_time' => $starTime = $this->faker->dateTimeBetween('-1 year', '+1 year'),
             'end_time' => Carbon::parse($starTime)->addHours(2),

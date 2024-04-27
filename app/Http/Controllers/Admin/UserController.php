@@ -63,7 +63,7 @@ class UserController extends Controller
         $user->update([
             'role' => request('role'),
         ]);
-
+        
         return response()->json(['success' => true]);
     }
 

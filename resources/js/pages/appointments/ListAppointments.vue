@@ -14,6 +14,8 @@ const getAppointmentStatus = () => {
 };
 const appointments = ref([]);
 const loading = ref(false);
+const expandableId = ref(null);
+
 const getAppointments = (status) => {
     loading.value = true;
     selectedStatus.value = status;
@@ -65,6 +67,9 @@ const deleteAppointment = (id) => {
     })
 };
 
+const toggleExpandable = (id) => {
+  expandableId.value = expandableId.value === id ? null : id;
+};
 onMounted(() => {
     getAppointments();
     getAppointmentStatus();
@@ -75,7 +80,7 @@ onMounted(() => {
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Appointments</h1>
+                    <h1 class="m-0">Requests</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -91,7 +96,7 @@ onMounted(() => {
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-11">
                     <div class="d-flex justify-content-between mb-2">
                         <div>
                             <router-link to="/admin/appointments/create">
@@ -99,6 +104,19 @@ onMounted(() => {
                                     Appointment</button>
                             </router-link>
                         </div>
+                        <div class="mb-2">
+<form action="simple-results.html">
+<div class="input-group input-group-lg">
+<input type="search" class="form-control form-control-lg" placeholder="Exit Pass Code" >
+<div class="input-group-append">
+<button type="submit" class="btn btn-lg btn-default">
+<i class="fa fa-search"></i>
+</button>
+</div>
+</div>
+</form>
+</div>
+                        
                         <div class="btn-group">
                             <button @click="getAppointments()" type="button" class="btn"
                                 :class="[typeof selectedStatus === 'undefined' ? 'btn-secondary' : 'btn-default']">
@@ -115,16 +133,18 @@ onMounted(() => {
                             </button>
                         </div>
                     </div>
-                    <div class="card">
+                    <!-- <div class="card">
                         <div class="card-body">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Client Name</th>
+                                        <th scope="col">Requestor Name</th>
                                         <th scope="col">Date</th>
                                         <th scope="col">Time</th>
                                         <th scope="col">Status</th>
+                                        <th scope="col">Options</th>
+                                        <th scope="col">Options</th>
                                         <th scope="col">Options</th>
                                     </tr>
                                 </thead>
@@ -142,7 +162,7 @@ onMounted(() => {
                                             <router-link :to="`/admin/appointments/${appointment.id}/edit`">
                                                 <i class="fa fa-edit mr-2"></i>
                                             </router-link>
-
+                                            
                                             <a href="#" @click.prevent="deleteAppointment(appointment.id)">
                                                 <i class="fa fa-trash text-danger"></i>
                                             </a>
@@ -151,7 +171,54 @@ onMounted(() => {
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                    </div> -->
+                    <div class="card">
+                    <div class="card-body">
+<table class="table table-bordered table-hover">
+<thead>
+<tr>
+<th>#</th>
+<th>Requestor Name</th>
+<th>Date</th>
+<th>Status</th>
+<th>Exit Pass Code</th>
+<th>Transfer Location FROM</th>
+<th>Transfer Location TO</th>
+<th>Item Condition</th>
+</tr>
+</thead>
+<tbody>
+    <tr v-for="(appointment, index) in appointments.data" :key="appointment.id">
+  <td>{{ index + 1 }}</td>
+  <td>{{ appointment.requestor_name }}</td>
+  <td>{{ appointment.start_time }}</td>
+  <td><span class="badge" :class="`badge-${appointment.status.color}`">{{ appointment.status.name }}</span></td>
+  <td>6X3BX</td>
+  <td>Macasandig</td>
+  <td>Uptown</td>
+  <td>For replacement</td>
+  <td>
+                                            <router-link :to="`/admin/appointments/${appointment.id}/edit`">
+                                                <i class="fa fa-edit mr-2"></i>
+                                            </router-link>
+                                            
+                                            <a href="#" @click.prevent="deleteAppointment(appointment.id)">
+                                                <i class="fa fa-trash text-danger"></i>
+                                            </a>
+                                        </td>
+</tr>
+<!-- <tr class="expandable-body d-none">
+    <td colspan="8">
+        <p style="display: none;">
+           asdasdasd
+        </p>
+    </td>
+</tr> -->
+
+</tbody>
+</table>
+</div>
+</div>
                 </div>
             </div>
         </div>

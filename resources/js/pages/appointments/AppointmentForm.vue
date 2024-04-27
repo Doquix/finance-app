@@ -11,11 +11,14 @@ const router = useRouter();
 const route = useRoute();
 const toastr = useToastr();
 const form = reactive({
-    title: '',
-    client_id: '',
+    // title: '',
+    // client_id: '',
     start_time: '',
     end_time: '',
     description: '',
+    requestor_name: '',
+    
+  
 });
 
 const handleSubmit = (values, actions) => {
@@ -48,19 +51,19 @@ const editAppointment = (values, actions) => {
     })
 };
 
-const clients = ref();
-const getClients = () => {
-    axios.get('/api/clients')
-    .then((response) => {
-        clients.value = response.data;
-    })
-};
+// const clients = ref();
+// const getClients = () => {
+//     axios.get('/api/clients')
+//     .then((response) => {
+//         clients.value = response.data;
+//     })
+// };
 
 const getAppointment = () => {
     axios.get(`/api/appointments/${route.params.id}/edit`)
     .then(({data}) => {
-        form.title = data.title;
-        form.client_id = data.client_id;
+        // form.title = data.title;
+        form.requestor_name = data.requestor_name;
         form.start_time = data.formatted_start_time;
         form.end_time = data.formatted_end_time;
         form.description = data.description;
@@ -80,7 +83,7 @@ onMounted(() => {
         dateFormat: "Y-m-d h:i K",
         defaultHour: 10,
     });
-    getClients();
+    // getClients();
 });
 </script>
 
@@ -122,12 +125,12 @@ onMounted(() => {
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="title">Title</label>
-                                            <input v-model="form.title" type="text" class="form-control" :class="{ 'is-invalid': errors.title }" id="title" placeholder="Enter Title">
-                                            <span class="invalid-feedback">{{ errors.title }}</span>
+                                            <label for="requestor_name">Requestor Name</label>
+                                            <input v-model="form.requestor_name" type="text" class="form-control" :class="{ 'is-invalid': errors.requestor_name }" id="requestor_name" placeholder="Enter Name">
+                                            <span class="invalid-feedback">{{ errors.requestor_name }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <!-- <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="client">Client Name</label>
                                             <select v-model="form.client_id" id="client" class="form-control" :class="{ 'is-invalid': errors.client_id }">
@@ -135,7 +138,8 @@ onMounted(() => {
                                             </select>
                                             <span class="invalid-feedback">{{ errors.client_id }}</span>
                                         </div>
-                                    </div>
+                                    </div> -->
+                                    
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">

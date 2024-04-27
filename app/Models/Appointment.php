@@ -21,12 +21,12 @@ class Appointment extends Model
         'end_time' => 'datetime',
         'status' => AppointmentStatus::class,
     ];
-
+    
     public function client(): BelongsTo
     {
         return $this->belongsTo(Client::class);
     }
-
+    
     public function formattedStartTime(): Attribute
     {
         return Attribute::make(

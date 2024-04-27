@@ -40,7 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/api/users/{user}', [UserController::class, 'destory']);
     Route::delete('/api/users', [UserController::class, 'bulkDelete']);
 
-    Route::get('/api/clients', [ClientController::class, 'index']);
+    // Route::get('/api/clients', [ClientController::class, 'index']);
 
     Route::get('/api/appointment-status', [AppointmentStatusController::class, 'getStatusWithCount']);
     Route::get('/api/appointments', [AppointmentController::class, 'index']);

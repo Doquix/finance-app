@@ -16,9 +16,10 @@ const formValues = ref();
 const form = ref(null);
 
 const loading = ref(false);
-const getUsers = (page = 1) => {
+
+const getUsers = () => {
     loading.value = true;
-    axios.get(`/api/users?page=${page}`, {
+    axios.get(`/api/users`, {
         params: {
             query: searchQuery.value
         }

@@ -51,9 +51,9 @@ class User extends Authenticatable
     ];
 
     public function getFormattedCreatedAtAttribute()
-    {
-        return $this->created_at->format(setting('date_format'));
-    }
+{
+    return $this->created_at ? $this->created_at->format(setting('date_format')) : null;
+}
 
     public function role(): Attribute
     {
@@ -68,4 +68,9 @@ class User extends Authenticatable
             get: fn ($value) => asset(Storage::url($value) ?? 'noimage.png'),
         );
     }
+
+  
+
+
+
 }

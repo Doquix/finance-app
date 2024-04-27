@@ -16,7 +16,7 @@ class DashboardStatController extends Controller
                 $query->where('status', AppointmentStatus::SCHEDULED);
             })
             ->when(request('status') === 'confirmed', function ($query) {
-                $query->where('status', AppointmentStatus::CONFIRMED);
+                $query->where('status', AppointmentStatus::APPROVED);
             })
             ->when(request('status') === 'cancelled', function ($query) {
                 $query->where('status', AppointmentStatus::CANCELLED);
