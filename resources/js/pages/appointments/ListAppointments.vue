@@ -188,15 +188,15 @@ onMounted(() => {
 </tr>
 </thead>
 <tbody>
-    <tr v-for="(appointment, index) in appointments.data" :key="appointment.id">
+<tr v-for="(appointment, index) in appointments.data" data-widget="expandable-table" aria-expanded="true" :key="appointment.id">
   <td>{{ index + 1 }}</td>
   <td>{{ appointment.requestor_name }}</td>
   <td>{{ appointment.start_time }}</td>
   <td><span class="badge" :class="`badge-${appointment.status.color}`">{{ appointment.status.name }}</span></td>
-  <td>6X3BX</td>
-  <td>Macasandig</td>
-  <td>Uptown</td>
-  <td>For replacement</td>
+  <td>{{ appointment.exit_pass_code }}</td>
+  <td>{{ appointment.transfer_location_from }}</td>
+  <td>{{ appointment.transfer_location_to }}</td>
+  <td>{{ appointment.item_condition }}</td>
   <td>
                                             <router-link :to="`/admin/appointments/${appointment.id}/edit`">
                                                 <i class="fa fa-edit mr-2"></i>
@@ -207,13 +207,13 @@ onMounted(() => {
                                             </a>
                                         </td>
 </tr>
-<!-- <tr class="expandable-body d-none">
+<tr class="expandable-body d-none"  v-if="appointments.data" v-for="(appointment, index) in appointments.data.slice().reverse()" :key="appointment.id">
     <td colspan="8">
         <p style="display: none;">
-           asdasdasd
+            {{ appointment.description }}
         </p>
     </td>
-</tr> -->
+</tr>
 
 </tbody>
 </table>

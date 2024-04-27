@@ -20,12 +20,17 @@ class AppointmentController extends Controller
             ->through(fn ($appointment) => [
                 'id' => $appointment->id,
                 'start_time' => $appointment->start_time->format('Y-m-d h:i A'),
-                'end_time' => $appointment->end_time->format('Y-m-d h:i A'),
+                
                 'status' => [
                     'name' => $appointment->status->name,
                     'color' => $appointment->status->color(),
                 ],
                 'requestor_name' => $appointment->requestor_name,
+                'description' => $appointment->description,
+                'exit_pass_code' => $appointment->exit_pass_code,
+                'transfer_location_from' => $appointment->transfer_location_from,
+                'transfer_location_to' => $appointment->transfer_location_to,
+                'item_condition' => $appointment->item_condition,
             ]);
     }
 
@@ -35,16 +40,23 @@ class AppointmentController extends Controller
             'requestor_name' => 'required',
             'description' => 'required',
             'start_time' => 'required',
-            'end_time' => 'required',
+            'transfer_location_from' => 'required',
+            'exit_pass_code' => 'required',
+            'transfer_location_to' => 'required',
+            'item_condition' => 'required',
         ]
         );
 
         Appointment::create([
             'requestor_name' => $validated['requestor_name'], // "client_id" => "requestor_name
             'start_time' => $validated['start_time'],
-            'end_time' => $validated['end_time'],
+            
             'description' => $validated['description'],
             'status' => AppointmentStatus::SCHEDULED,
+            'exit_pass_code' => $validated['exit_pass_code'],
+            'transfer_location_from' => $validated['transfer_location_from'],
+            'transfer_location_to' => $validated['transfer_location_to'],
+            'item_condition' => $validated['item_condition'],
         ]);
 
         return response()->json(['message' => 'success']);
@@ -61,9 +73,13 @@ class AppointmentController extends Controller
             'requestor_name' => 'required', // 'client_id' => 'required
             'description' => 'required',
             'start_time' => 'required',
-            'end_time' => 'required',
+            
+            'exit_pass_code' => 'required',
+            'transfer_location_from' => 'required',
+            'transfer_location_to' => 'required',
+            'item_condition' => 'required',
         ]);
-
+        
         $appointment->update($validated);
 
         return response()->json(['success' => true]);

@@ -14,9 +14,13 @@ const form = reactive({
     // title: '',
     // client_id: '',
     start_time: '',
-    end_time: '',
+    
     description: '',
     requestor_name: '',
+    exit_pass_code: '',
+    transfer_location_from: '',
+    transfer_location_to: '',
+    item_condition: '',
     
   
 });
@@ -30,6 +34,11 @@ const handleSubmit = (values, actions) => {
 };
 
 const createAppointment = (values, actions) => {
+      // Generate a random exit passcode
+    const exitPassCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+    
+    // Assign the generated exit passcode to the form
+    form.exit_pass_code = exitPassCode;
     axios.post('/api/appointments/create', form)
     .then((response) => {
         router.push('/admin/appointments');
@@ -65,8 +74,12 @@ const getAppointment = () => {
         // form.title = data.title;
         form.requestor_name = data.requestor_name;
         form.start_time = data.formatted_start_time;
-        form.end_time = data.formatted_end_time;
+       
         form.description = data.description;
+        form.exit_pass_code = data.exit_pass_code;
+        form.transfer_location_from = data.transfer_location_from;
+        form.transfer_location_to = data.transfer_location_to;
+        form.item_condition = data.item_condition;
     })
 };
 
@@ -130,6 +143,27 @@ onMounted(() => {
                                             <span class="invalid-feedback">{{ errors.requestor_name }}</span>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="item_condition">Item Status</label>
+                                            <input v-model="form.item_condition" type="text" class="form-control" :class="{ 'is-invalid': errors.item_condition }" id="item_condition" placeholder="Enter Item Status">
+                                            <span class="invalid-feedback">{{ errors.item_condition }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="transfer_location_from">Transfer From</label>
+                                            <input v-model="form.transfer_location_from" type="text" class="form-control" :class="{ 'is-invalid': errors.transfer_location_from }" id="transfer_location_from" placeholder="Transfer From">
+                                            <span class="invalid-feedback">{{ errors.transfer_location_from }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="transfer_location_to">Transfer To</label>
+                                            <input v-model="form.transfer_location_to" type="text" class="form-control" :class="{ 'is-invalid': errors.transfer_location_to }" id="transfer_location_to" placeholder="Transfer To">
+                                            <span class="invalid-feedback">{{ errors.transfer_location_to }}</span>
+                                        </div>
+                                    </div>
                                     <!-- <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="client">Client Name</label>
@@ -149,13 +183,7 @@ onMounted(() => {
                                             <span class="invalid-feedback">{{ errors.start_time }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="end-time">End Time</label>
-                                            <input v-model="form.end_time" type="text" class="form-control flatpickr" :class="{'is-invalid': errors.end_time}" id="end-time">
-                                            <span class="invalid-feedback">{{ errors.end_time }}</span>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                                 <div class="form-group">
                                     <label for="description">Description</label>
