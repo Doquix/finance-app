@@ -49,14 +49,6 @@ Here is the YouTube playlist link: https://www.youtube.com/watch?v=IoPOi-Xp_Ng&l
 - You can now log in with user "john@example.com", password "password"
 
 
-## Authors
-
-- [@clovon](https://www.github.com/clovon)
-
-
-## Feedback
-
-If you have any feedback, please reach out to me at channel.clovon@gmail.com
 
 
 ## License
